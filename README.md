@@ -1,6 +1,12 @@
+<p align="center">
+  <img src="assets/logo.png" alt="esnodePy Logo" width="300">
+</p>
+
 # esnodePy
 
-**esnodePy** is a zero-config Python tool that shows where your code’s assumptions break.
+**Zero-config Python boundary intelligence.**
+
+`esnodePy` is a developer tool that scans your Python codebase to detect **Assumption Drift**—places where your type hints (what you claim) and your function logic (what actually happens) disagree.
 
 It surfaces:
 - Type drift
