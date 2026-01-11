@@ -1,11 +1,11 @@
 [project]
 name = "esnodePy"
-version = "0.1.0"
+version = "0.2.0"
 description = "Zero-config Python boundary intelligence"
 readme = "README.md"
 authors = [{ name="ESNODE", email="info@esnode.co" }]
 license = { file = "LICENSE" }
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 dependencies = []
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -31,7 +31,7 @@ dev = [
 ]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.9"
 strict = true
 ignore_missing_imports = true
 
