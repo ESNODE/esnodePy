@@ -1,0 +1,9 @@
+[project]
+name = "esnodePy"
+version = "0.1.0"
+description = "Zero-config Python boundary intelligence"
+authors = [{ name="esnode" }]
+dependencies = []
+
+[project.scripts]
+esnodepy = "esnodepy.cli:main"
