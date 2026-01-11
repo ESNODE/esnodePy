@@ -1,6 +1,6 @@
 [project]
 name = "esnodePy"
-version = "0.2.0"
+version = "0.2.1"
 description = "Zero-config Python boundary intelligence"
 readme = "README.md"
 authors = [{ name="ESNODE", email="info@esnode.co" }]
