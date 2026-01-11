@@ -10,38 +10,53 @@ class FunctionBoundary:
     Represents a function boundary where assumptions (declarations) 
     vs reality (observations) can be compared.
     """
-    def __init__(self, name: str, declared_return: Optional[str] = None):
+    def __init__(self, name: str, declared_return: Optional[str] = None, file: Optional[str] = None, lineno: Optional[int] = None):
         """
         Initialize a FunctionBoundary.
 
         Args:
             name (str): The name of the function.
             declared_return (Optional[str]): The return type declared in the signature.
+            file (Optional[str]): The file path where the function is defined.
+            lineno (Optional[int]): The line number where the function is defined.
         """
         self.name: str = name
         self.declared_return: Optional[str] = declared_return
+        self.file: Optional[str] = file
+        self.lineno: Optional[int] = lineno
         self.observed_returns: Set[str] = set()
 
-    def observe_return(self, value_type: str) -> None:
+    def observe_return(self, value: str) -> None:
         """
-        Record an observed return type from runtime or static analysis.
+        Record an observed return value shape.
 
         Args:
-            value_type (str): The string representation of the observed type.
+            value (str): The string representation of the observed return shape.
         """
-        self.observed_returns.add(value_type)
+        self.observed_returns.add(value)
 
     def has_drift(self) -> bool:
         """
         Check if the observed behavior contradicts the declared assumption.
+        
+        Drift definition (v0.2):
+        - A return type is declared (and is not 'None').
+        - But we observe a 'None' return (implicit or explicit).
 
         Returns:
             bool: True if drift is detected, False otherwise.
         """
-        # If no declaration exists, we cannot determine drift (strictness is off)
         if not self.declared_return:
             return False
-        
-        # In a more complex engine, we would check for subclass compatibility.
-        # For v0.1, we check for strict string equality or membership.
-        return self.declared_return not in self.observed_returns
+
+        # If declared is explicitly None, observing None is fine.
+        if self.declared_return == "None":
+            return False
+
+        # If declared is NOT None, but we observe None (or implicit None), that's a risk.
+        # Check for our specific None markers.
+        for obs in self.observed_returns:
+            if obs == "None" or obs == "None (implicit)":
+                return True
+
+        return False

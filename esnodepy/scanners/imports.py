@@ -36,8 +36,8 @@ def run(target_dir: str = ".") -> None:
 
                 for node in ast.walk(tree):
                     if isinstance(node, ast.Import):
-                        for name in node.names:
-                            risky.append((path, name.name))
+                        for alias in node.names:
+                            risky.append((path, alias.name))
                     elif isinstance(node, ast.ImportFrom):
                         if node.module:
                             risky.append((path, node.module))
@@ -49,8 +49,8 @@ def run(target_dir: str = ".") -> None:
     # De-duplicate and limit output for CLI readability
     unique_risks = sorted(list(set(risky)), key=lambda x: x[1])
     
-    for path, name in unique_risks[:10]:
-        print(f"- {name} imported in {path}")
+    for path, mod_name in unique_risks[:10]:
+        print(f"- {mod_name} imported in {path}")
     
     if len(unique_risks) > 10:
         print(f"... and {len(unique_risks) - 10} others.")

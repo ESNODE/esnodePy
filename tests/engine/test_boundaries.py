@@ -21,10 +21,16 @@ def test_boundary_observation():
     assert not fb.has_drift()
 
 def test_boundary_drift_detection():
-    """Test correctly identifying drift."""
+    """Test correctly identifying drift (None return when something else declared)."""
+    fb = FunctionBoundary("test_func", "int")
+    fb.observe_return("None (implicit)")
+    assert fb.has_drift()
+
+def test_type_mismatch_is_not_drift_in_v02():
+    """Ensure type mismatch ignores drift in v0.2 logic."""
     fb = FunctionBoundary("test_func", "int")
     fb.observe_return("str")
-    assert fb.has_drift()
+    assert not fb.has_drift()
     
 def test_no_declared_return_drift():
     """Ensures no drift is reported if no return type is declared."""

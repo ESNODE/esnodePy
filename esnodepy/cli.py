@@ -6,7 +6,7 @@
 import argparse
 from esnodepy.scanners import scan, imports, runtime, diff
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         prog="esnodepy",
         description="Zero-config Python boundary intelligence"
