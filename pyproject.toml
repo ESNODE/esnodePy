@@ -41,3 +41,8 @@ ignore_missing_imports = true
 
 [tool.isort]
 profile = "black"
+
+[tool.setuptools.packages.find]
+include = ["esnodepy*"]
+exclude = ["tests*"]
+
