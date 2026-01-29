@@ -28,6 +28,37 @@ esnodepy imports
 esnodepy runtime
 esnodepy diff
 ```
+CLI examples (local, remote, structured output):
+
+```bash
+# Scan current directory (human readable)
+esnodepy scan
+
+# Scan a specific local path
+esnodepy scan /path/to/project
+
+# Scan a remote git repo (auto-cloned to temp dir)
+esnodepy scan https://github.com/ESNODE/esnodePy.git
+
+# Produce structured JSON output
+esnodepy scan --output report.json
+
+# Combine remote + JSON
+esnodepy scan https://github.com/ESNODE/esnodePy.git --output remote_report.json
+```
+
+CI badge and quick consumption
+
+[![CI](https://github.com/ESNODE/esnodePy/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ESNODE/esnodePy/actions)
+
+After the CI job emits `esnode_report.json` you can assert failures in shell using `jq`:
+
+```bash
+# Exit non-zero if any drift found
+if [ $(jq '.drift_count' esnode_report.json) -gt 0 ]; then
+  echo "Assumption drift detected"; exit 1;
+fi
+```
 
 ## Philosophy
 

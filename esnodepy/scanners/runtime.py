@@ -3,8 +3,13 @@
 # This software is released under the ESNODE COMMUNITY LICENSE 1.0.
 # See the LICENSE file in the root directory for full terms and conditions.
 
-def run() -> None:
-    print("\nEDGE — Runtime Observation")
-    print("==========================")
-    print("Runtime observation is opt-in and not enabled by default.")
-    print("This will be implemented via pytest plugin or tracing.")
+from typing import Dict, Any
+
+
+def run(target_dir: str = ".") -> Dict[str, Any]:
+    """Runtime observation is local-only for security reasons.
+
+    The current implementation is a placeholder and returns a message
+    describing the feature status.
+    """
+    return {"message": "Runtime observation is opt-in and not enabled by default.", "local_path": target_dir}

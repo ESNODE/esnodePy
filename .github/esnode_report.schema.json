@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "esnodePy Scan Report",
+  "type": "object",
+  "properties": {
+    "drift_count": { "type": "integer", "minimum": 0 },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "file": { "type": "string" },
+          "lineno": { "type": ["integer", "null"] },
+          "declared_return": { "type": ["string", "null"] },
+          "observed_returns": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["name", "file", "lineno", "declared_return", "observed_returns"]
+      }
+    }
+  },
+  "required": ["drift_count", "issues"],
+  "additionalProperties": false
+}

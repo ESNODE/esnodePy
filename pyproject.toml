@@ -31,7 +31,8 @@ dev = [
     "pytest-cov",
     "black",
     "isort",
-    "mypy"
+    "mypy",
+    "jsonschema"
 ]
 
 [tool.mypy]

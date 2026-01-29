@@ -6,21 +6,18 @@
 import ast
 import os
 import logging
-from typing import List, Tuple
+from typing import List, Tuple, Dict, Any
 
 logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
-def run(target_dir: str = ".") -> None:
+def run(target_dir: str = ".") -> Dict[str, Any]:
     """
     Scans for external imports in the target directory to identify boundary risks.
 
     Args:
         target_dir (str): Directory to scan.
     """
-    print("\nEDGE — Import Boundary Report")
-    print("============================")
-
     risky: List[Tuple[str, str]] = []
 
     for root, _, files in os.walk(target_dir):
@@ -42,15 +39,11 @@ def run(target_dir: str = ".") -> None:
                         if node.module:
                             risky.append((path, node.module))
 
-    if not risky:
-        print("No risky import boundaries detected.")
-        return
-
-    # De-duplicate and limit output for CLI readability
+    # De-duplicate and convert to dicts for structured output
     unique_risks = sorted(list(set(risky)), key=lambda x: x[1])
-    
-    for path, mod_name in unique_risks[:10]:
-        print(f"- {mod_name} imported in {path}")
-    
-    if len(unique_risks) > 10:
-        print(f"... and {len(unique_risks) - 10} others.")
+    risks = [
+        {"path": path, "module": mod_name}
+        for path, mod_name in unique_risks
+    ]
+
+    return {"risk_count": len(risks), "risks": risks}

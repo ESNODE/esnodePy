@@ -3,7 +3,8 @@
 # This software is released under the ESNODE COMMUNITY LICENSE 1.0.
 # See the LICENSE file in the root directory for full terms and conditions.
 
-def run() -> None:
-    print("\nEDGE — Change Impact Analysis")
-    print("============================")
-    print("Diff analysis will surface boundary risk between revisions.")
+from typing import Dict, Any
+
+
+def run(target_dir: str = ".") -> Dict[str, Any]:
+    return {"message": "Diff analysis placeholder", "path": target_dir}

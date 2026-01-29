@@ -6,9 +6,9 @@
 import ast
 import os
 import logging
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from esnodepy.engine.boundaries import FunctionBoundary
-from esnodepy.engine.report import report_drift
+from esnodepy.engine.report import collect_drift_data, report_drift
 
 # Configure logging
 logging.basicConfig(level=logging.ERROR)
@@ -37,7 +37,7 @@ def infer_return_value(node: Optional[ast.AST]) -> str:
 
     return "Unknown"
 
-def run(target_dir: str = ".") -> None:
+def run(target_dir: str = ".") -> Dict[str, Any]:
     """
     Scans the target directory for Python files and analyzes function return type drift
     using AST-based return value inference.
@@ -98,4 +98,6 @@ def run(target_dir: str = ".") -> None:
 
                     boundaries.append(fb)
 
-    report_drift(boundaries)
+    # Return structured data for machine parsing; preserve printing behaviour via report_drift
+    data = collect_drift_data(boundaries)
+    return data
